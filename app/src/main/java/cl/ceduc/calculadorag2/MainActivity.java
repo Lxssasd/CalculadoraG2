@@ -37,60 +37,55 @@ public class MainActivity extends AppCompatActivity {
 
         btn_0.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) { setDigito("0");
-
             }
         });
 
         btn_1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) { setDigito("1");
-
             }
         });
 
         btn_2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) { setDigito("2");
-
             }
         });
 
         btn_3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) { setDigito("3");
-
             }
         });
 
         btn_4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) { setDigito("4");
-
             }
         });
 
         btn_5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) { setDigito("5");
-
             }
         });
 
         btn_6.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) { setDigito("6");
-
             }
         });
 
         btn_7.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) { setDigito("7");
-
             }
         });
 
         btn_8.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) { setDigito("8");
-
             }
         });
 
         btn_9.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) { setDigito("9");
+            }
+        });
+        btn_clean.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {txt_data.setText("0"s);}{
 
             }
         });
@@ -98,7 +93,19 @@ public class MainActivity extends AppCompatActivity {
     void setDigito(String digito){
         TextView txt_data = (TextView) this.findViewById(R.id.TextView_Data);
         String actual = txt_data.getText().toString();
-        String nuevo = actual + digito;
-        txt_data.setText(nuevo);
+        float actual0 = Float.parseFloat(txt_data.getText().toString());
+        int Numeros = txt_data.length();
+        if (actual0 == 0){
+            String nuevo = digito;
+            txt_data.setText(nuevo);
+        }
+        else if (Numeros == 7){
+            String nuevo= actual;
+        }
+        else{
+            String nuevo = actual + digito;
+            txt_data.setText(nuevo);
+        }
+
     }
 }
