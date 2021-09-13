@@ -3,13 +3,15 @@ package cl.ceduc.calculadorag2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.TestLooperManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
-    @Override
+    double No1 = 0.0f;
+    double No2 = 0.0f;
+    String operacion = "";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -85,10 +87,111 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         btn_clean.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {txt_data.setText("0"s);}{
+            public void onClick(View view) {
+                txt_data.setText("0");}{
+                No1 = 0.0f;
+                No2 = 0.0f;
+                operacion = "";
+            }
+        });
+        btn_divide.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                No1 = Double.parseDouble(txt_data.getText().toString());
+                operacion = "/";
+                txt_data.setText("0");
+            }
+        });
+        btn_multiply.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                No1 = Double.parseDouble(txt_data.getText().toString());
+                operacion = "*";
+                txt_data.setText("0");
+            }
+        });
+        btn_plus.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                No1 = Double.parseDouble(txt_data.getText().toString());
+                operacion = "+";
+                txt_data.setText("0");
+            }
+        });
+        btn_minun.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                No1 = Double.parseDouble(txt_data.getText().toString());
+                operacion = "-";
+                txt_data.setText("0");
+            }
+        });
+        btn_point.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                if(txt_data.getText().toString() == "0")
+                setDigito("0.");
+                else{
+                    setDigito(".");
+                }
+            }
+        });
+        btn_equals.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                No2 = Double.parseDouble(txt_data.getText().toString());
+
+                if(operacion.equals("/")){
+                    if(No2 > 0.0f){
+                        double result = No1 / No2;
+                        txt_data.setText(""+ result);
+
+                    }
+                    else{
+                        txt_data.setText("0");
+                    }
+                }
+
+                if(operacion.equals("*")){
+                    if(No2 == 0.0f){
+                        txt_data.setText("0");
+                    }
+                    else{
+                        double result = No1 * No2;
+                        txt_data.setText(""+ result);
+                    }
+                }
+
+                if(operacion.equals("+")){
+                    if(No2 == 0.0f){
+                        txt_data.setText("0");
+                    }
+                    else{
+                        double result = No1 + No2;
+                        txt_data.setText(""+ result);
+                    }
+                }
+
+                if(operacion.equals("-")){
+                    if(No2 == 0.0f){
+                        txt_data.setText("0");
+                    }
+                    else{
+                        double result = No1 - No2;
+                        txt_data.setText(""+ result);
+                    }
+                }
+            }
+        });
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                int Nums = txt_data.length();
+                String asd = txt_data.getText().toString();
+                if(Nums > 1){
+                    asd = asd.substring(0, Nums -1);
+                    txt_data.setText(asd);
+                }
+                else{
+                    txt_data.setText("0");
+                }
 
             }
         });
+
     }
     void setDigito(String digito){
         TextView txt_data = (TextView) this.findViewById(R.id.TextView_Data);
@@ -101,11 +204,14 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (Numeros == 7){
             String nuevo= actual;
+            txt_data.setText(actual);
         }
         else{
             String nuevo = actual + digito;
             txt_data.setText(nuevo);
         }
+
+
 
     }
 }
