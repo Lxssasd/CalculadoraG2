@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity {
     double No1 = 0.0f;
     double No2 = 0.0f;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn_equals = (Button) this.findViewById(R.id.button_equals);
 
         TextView txt_data = (TextView) this.findViewById(R.id.TextView_Data);
+        txt_data.setText("0");
 
         btn_0.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) { setDigito("0");
@@ -124,21 +127,31 @@ public class MainActivity extends AppCompatActivity {
         });
         btn_point.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                if(txt_data.getText().toString() == "0")
-                setDigito("0.");
-                else{
-                    setDigito(".");
+                Double Num = Double.parseDouble(txt_data.getText().toString());
+                String actual = txt_data.getText().toString();
+                Boolean point = actual.contains(".");
+                if(point == false){
+                    if(Num == 0){
+                        txt_data.setText("0.");
+                    }
+                    else{
+                        setDigito(".");
+                    }
                 }
+                else{
+                }
+
             }
         });
         btn_equals.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 No2 = Double.parseDouble(txt_data.getText().toString());
+                DecimalFormat format = new DecimalFormat("0.####");
 
                 if(operacion.equals("/")){
                     if(No2 > 0.0f){
                         double result = No1 / No2;
-                        txt_data.setText(""+ result);
+                        txt_data.setText(""+ format.format(result));
 
                     }
                     else{
@@ -152,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         double result = No1 * No2;
-                        txt_data.setText(""+ result);
+                        txt_data.setText(""+ format.format(result));
                     }
                 }
 
@@ -162,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         double result = No1 + No2;
-                        txt_data.setText(""+ result);
+                        txt_data.setText(""+ format.format(result));
                     }
                 }
 
@@ -172,18 +185,21 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         double result = No1 - No2;
-                        txt_data.setText(""+ result);
+                        txt_data.setText(""+ format.format(result));
                     }
                 }
+                No1 = 0.0f;
+                No2 = 0.0f;
+                operacion = "";
             }
         });
         btn_back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 int Nums = txt_data.length();
-                String asd = txt_data.getText().toString();
+                String Num = txt_data.getText().toString();
                 if(Nums > 1){
-                    asd = asd.substring(0, Nums -1);
-                    txt_data.setText(asd);
+                    Num = Num.substring(0, Nums -1);
+                    txt_data.setText(Num);
                 }
                 else{
                     txt_data.setText("0");
@@ -196,13 +212,21 @@ public class MainActivity extends AppCompatActivity {
     void setDigito(String digito){
         TextView txt_data = (TextView) this.findViewById(R.id.TextView_Data);
         String actual = txt_data.getText().toString();
-        float actual0 = Float.parseFloat(txt_data.getText().toString());
+        Boolean point = actual.contains(".");
         int Numeros = txt_data.length();
-        if (actual0 == 0){
+        int Max;
+
+        if(point == false ){
+            Max = 7;
+        }
+        else{
+            Max = 8;
+        }
+        if (actual == "0"){
             String nuevo = digito;
             txt_data.setText(nuevo);
         }
-        else if (Numeros == 7){
+        else if (Numeros == Max){
             String nuevo= actual;
             txt_data.setText(actual);
         }
@@ -210,8 +234,5 @@ public class MainActivity extends AppCompatActivity {
             String nuevo = actual + digito;
             txt_data.setText(nuevo);
         }
-
-
-
     }
 }
